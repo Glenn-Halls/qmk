@@ -119,3 +119,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #        define RGB_MATRIX_KEYPRESSES
 //#    endif
 #endif
+
+// inputs Layertoggle keypress on keypress instead of waiting for TAPPING_TERM delay
+#define HOLD_ON_OTHER_KEY_PRESS
+
+// imposes HOLD_ON_OTHER_KEY_PRESS functionality to MOD_TAP as well as Layertoggle
+#define IGNORE_MOD_TAP_INTERRUPT
+
+// when a user holds a key after tapping it, will now activate hold function instead of (default) auto-repeating the tapping function
+#define TAPPING_FORCE_HOLD
