@@ -134,3 +134,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // when a user holds a key after tapping it, will now activate hold function instead of (default) auto-repeating the tapping function
 // this is on a per-key basis, defined in keymap
 #define TAPPING_FORCE_HOLD_PER_KEY
+
+// increased layers from 4 to 6
+#define DYNAMIC_KEYMAP_LAYER_COUNT 6
