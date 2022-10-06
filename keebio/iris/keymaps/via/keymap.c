@@ -33,7 +33,7 @@ typedef struct {
 enum {
     ESC_CAPS,
     WIN_CAPS,
-    ENT_L2_L3,
+    ENT_L235_L0,
 };
 
 td_state_t cur_dance(qk_tap_dance_state_t *state);
@@ -54,7 +54,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //├───────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌──────────────────┼────────┼────────┼────────┼────────┼────────┼────────┤
      KC_LBRC, KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,    LT(1,KC_DEL),    MT(MOD_RSFT,KC_TAB), KC_K,    KC_H,    KC_COMM, KC_DOT, KC_SLSH, KC_RBRC,
   //└───────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────────────┬─┴────────┴───┬────┴───┬────┴────────┴────────┴────────┘
-                                    KC_LALT, KC_LCTL, MT(MOD_LSFT,KC_BSPC),    LT(1,KC_SPC), TD(ENT_L2_L3), CAPS_WORD
+                                    KC_LALT, KC_LCTL, MT(MOD_LSFT,KC_BSPC),    LT(1,KC_SPC), TD(ENT_L235_L0), CAPS_WORD
                                 // └────────┴────────┴────────┘                └────────────┴──────────────┴────────┘
   ),
 
@@ -68,7 +68,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
      KC_LCBR,  KC_RPRN, KC_HOME,  KC_END,  KC_PGDN, KC_RCBR, KC_BSPC,         _______, KC_PIPE, KC_P1,   KC_P2,   KC_P3,   KC_MINS, KC_RCBR,
   //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
-                                    _______, _______, _______,                   KC_SPC,   TO(0),   KC_P0
+                                    _______, _______, _______,                   KC_SPC,   _______,  KC_P0
                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
   ),
 
@@ -110,7 +110,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //├───────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
      KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_HOME,          KC_END,  KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,
   //└───────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
-                                    KC_LGUI, FN_MO13, MT(MOD_LSFT,KC_BSPC),    LT(1,KC_SPC), FN_MO23, CAPS_WORD
+                                    KC_LGUI, FN_MO13, MT(MOD_LSFT,KC_BSPC),    LT(1,KC_SPC), _______, CAPS_WORD
                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
   ),
 
@@ -124,7 +124,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //├───────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
      KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_HOME,          KC_END,  KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,
   //└───────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
-                                    KC_LGUI, FN_MO13, MT(MOD_LSFT,KC_BSPC),    LT(1,KC_SPC), FN_MO23, CAPS_WORD
+                                    KC_LGUI, FN_MO13, MT(MOD_LSFT,KC_BSPC),    LT(1,KC_SPC), _______, CAPS_WORD
                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
   )
 };
@@ -177,12 +177,11 @@ void ent_finished(qk_tap_dance_state_t *state, void *user_data) {
     switch (enttap_state.state) {
         case TD_SINGLE_TAP: register_code(KC_ENT); break;
         case TD_SINGLE_HOLD: layer_on(_FN2); break;
-        case TD_DOUBLE_TAP: register_code(KC_ENT); break;
+        case TD_DOUBLE_TAP: tap_code(KC_ENT); register_code(KC_ENT); break;
         case TD_DOUBLE_HOLD: layer_on(_FN3); break;
-        // Last case is for fast typing. Assuming your key is `f`:
-        // For example, when typing the word `buffer`, and you want to make sure that you send `ff` and not `Esc`.
-        // In order to type `ff` when typing fast, the next character will have to be hit within the `TAPPING_TERM`, which by default is 200ms.
         case TD_DOUBLE_SINGLE_TAP: tap_code(KC_ENT); register_code(KC_ENT); break;
+        case TD_TRIPLE_HOLD: layer_on(_FN5); break;
+        case TD_TRIPLE_TAP: layer_off(_FN1); layer_off(_FN2); layer_off(_FN3); layer_off(_FN4); layer_off(_FN5); break;
         default: break;
     }
 }
@@ -194,6 +193,8 @@ void ent_reset(qk_tap_dance_state_t *state, void *user_data) {
         case TD_DOUBLE_TAP: unregister_code(KC_ENT); break;
         case TD_DOUBLE_HOLD: layer_off(_FN3); break;
         case TD_DOUBLE_SINGLE_TAP: unregister_code(KC_ENT); break;
+        case TD_TRIPLE_HOLD: layer_off(_FN5); break;
+        case TD_TRIPLE_TAP: layer_on(_MAIN);
         default: break;
     }
     enttap_state.state = TD_NONE;
@@ -206,5 +207,5 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     // Tap once for Windows key, twice for Caps Lock
     [WIN_CAPS] = ACTION_TAP_DANCE_DOUBLE(KC_RGUI, KC_CAPS),
     // Tap once for Enter, hold for L2, double hold for L3
-    [ENT_L2_L3] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, ent_finished, ent_reset),
+    [ENT_L235_L0] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, ent_finished, ent_reset),
 };
