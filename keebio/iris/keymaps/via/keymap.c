@@ -22,7 +22,9 @@ typedef enum {
     TD_DOUBLE_HOLD,
     TD_DOUBLE_SINGLE_TAP,
     TD_TRIPLE_TAP,
-    TD_TRIPLE_HOLD
+    TD_TRIPLE_HOLD,
+    TD_TRIPLE_SINGLE_TAP,
+    TD_QUAD_TAP
 } td_state_t;
 
 typedef struct {
@@ -155,16 +157,25 @@ td_state_t cur_dance(qk_tap_dance_state_t *state) {
         if (state->interrupted) return TD_DOUBLE_SINGLE_TAP;
         else if (state->pressed) return TD_DOUBLE_HOLD;
         else return TD_DOUBLE_TAP;
+    } else if (state->count == 3) {
+        // same as for TD_DOUBLE_SINGLE_TAP but for TD_TRIPLE_SINGLE_TAP
+        if (state->interrupted) return TD_TRIPLE_SINGLE_TAP;
+        else if (state->pressed) return TD_TRIPLE_HOLD;
+        else return TD_TRIPLE_TAP;
     }
+
+    // see note below from original documentation: alteration here is to make the same apply for quad-tap,
+    // which will break the dance, and return the basic KC the number of times it was pressed
 
     // Assumes no one is trying to type the same letter three times (at least not quickly).
     // If your tap dance key is 'KC_W', and you want to type "www." quickly - then you will need to add
     // an exception here to return a 'TD_TRIPLE_SINGLE_TAP', and define that enum just like 'TD_DOUBLE_SINGLE_TAP'
-    if (state->count == 3) {
-        if (state->interrupted || !state->pressed) return TD_TRIPLE_TAP;
-        else return TD_TRIPLE_HOLD;
-    } else return TD_UNKNOWN;
+    if (state->count >= 4) return TD_QUAD_TAP;
+    
+    else return TD_UNKNOWN;
+    
 }
+
 
 // Create an instance of 'td_tap_t' for the 'ent' tap dance.
 static td_tap_t enttap_state = {
@@ -182,6 +193,8 @@ void ent_finished(qk_tap_dance_state_t *state, void *user_data) {
         case TD_DOUBLE_SINGLE_TAP: tap_code(KC_ENT); register_code(KC_ENT); break;
         case TD_TRIPLE_HOLD: layer_on(_FN5); break;
         case TD_TRIPLE_TAP: layer_off(_FN1); layer_off(_FN2); layer_off(_FN3); layer_off(_FN4); layer_off(_FN5); break;
+        case TD_TRIPLE_SINGLE_TAP: register_code(KC_ENT); break;
+        case TD_QUAD_TAP: register_code(KC_ENT); break;
         default: break;
     }
 }
@@ -194,7 +207,15 @@ void ent_reset(qk_tap_dance_state_t *state, void *user_data) {
         case TD_DOUBLE_HOLD: layer_off(_FN3); break;
         case TD_DOUBLE_SINGLE_TAP: unregister_code(KC_ENT); break;
         case TD_TRIPLE_HOLD: layer_off(_FN5); break;
-        case TD_TRIPLE_TAP: layer_on(_MAIN);
+        case TD_TRIPLE_TAP: layer_on(_MAIN); break;
+        case TD_TRIPLE_SINGLE_TAP:
+        case TD_QUAD_TAP: {
+            for (int i = 1; i < state->count; i++) {
+               tap_code(KC_ENT);
+            }
+            unregister_code(KC_ENT);
+            break;
+        }
         default: break;
     }
     enttap_state.state = TD_NONE;
