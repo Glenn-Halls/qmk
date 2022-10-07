@@ -147,19 +147,21 @@ bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
 
 td_state_t cur_dance(qk_tap_dance_state_t *state) {
     if (state->count == 1) {
-        if (state->interrupted || !state->pressed) return TD_SINGLE_TAP;
+        // altered below if conditions from documented || to && to single tap for faster typing
+        if (state->interrupted && !state->pressed) return TD_SINGLE_TAP;
         // Key has not been interrupted, but the key is still held. Means you want to send a 'HOLD'.
-        else return TD_SINGLE_HOLD;
+        else if (state->pressed) return TD_SINGLE_HOLD;
+        else return TD_SINGLE_TAP;
     } else if (state->count == 2) {
         // TD_DOUBLE_SINGLE_TAP is to distinguish between typing "pepper", and actually wanting a double tap
         // action when hitting 'pp'. Suggested use case for this return value is when you want to send two
         // keystrokes of the key, and not the 'double tap' action/macro.
-        if (state->interrupted) return TD_DOUBLE_SINGLE_TAP;
+        if (state->interrupted && !state->pressed) return TD_DOUBLE_SINGLE_TAP;
         else if (state->pressed) return TD_DOUBLE_HOLD;
         else return TD_DOUBLE_TAP;
     } else if (state->count == 3) {
         // same as for TD_DOUBLE_SINGLE_TAP but for TD_TRIPLE_SINGLE_TAP
-        if (state->interrupted) return TD_TRIPLE_SINGLE_TAP;
+        if (state->interrupted && !state->pressed) return TD_TRIPLE_SINGLE_TAP;
         else if (state->pressed) return TD_TRIPLE_HOLD;
         else return TD_TRIPLE_TAP;
     }
