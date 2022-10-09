@@ -32,10 +32,48 @@ typedef struct {
     td_state_t state;
 } td_tap_t;
 
+// Double-tap keys
 enum {
     ESC_CAPS,
     WIN_CAPS,
     ENT_L235_L0,
+};
+
+// Macro Definitions
+enum custom_keycodes {
+    TEST = SAFE_RANGE,
+    QMKURL,
+    MY_OTHER_MACRO,
+};
+
+// Macros
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+    case TEST:
+        if (record->event.pressed) {
+            // when keycode QMKBEST is pressed
+            SEND_STRING("Testing 1, 2, 3...   Testing 1, 2, 3...");
+        } else {
+            // when keycode QMKBEST is released
+        }
+        break;
+
+    case QMKURL:
+        if (record->event.pressed) {
+            // when keycode QMKURL is pressed
+            SEND_STRING("https://qmk.fm/\n");
+        } else {
+            // when keycode QMKURL is released
+        }
+        break;
+
+    case MY_OTHER_MACRO:
+        if (record->event.pressed) {
+           SEND_STRING(SS_TAP(X_F10) SS_DELAY(23) SS_TAP(X_N)); // Quit game sc2
+        }
+        break;
+    }
+    return true;
 };
 
 td_state_t cur_dance(qk_tap_dance_state_t *state);
@@ -47,9 +85,9 @@ void ent_reset(qk_tap_dance_state_t *state, void *user_data);
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_MAIN] = LAYOUT(
-  //┌────────────────┬────────┬────────┬────────┬────────┬────────┐                           ┌────────┬────────┬────────┬────────┬────────┬────────┐
-     TD(ESC_CAPS),     KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                                KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    TD(WIN_CAPS),
-  //├────────────────┼────────┼────────┼────────┼────────┼────────┤                           ├────────┼────────┼────────┼────────┼────────┼────────┤
+  //┌───────┬────────┬────────┬────────┬────────┬────────┐                                    ┌────────┬────────┬────────┬────────┬────────┬────────┐
+     KC_ESC,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                                         KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    TD(WIN_CAPS),
+  //├───────┼────────┼────────┼────────┼────────┼────────┤                                    ├────────┼────────┼────────┼────────┼────────┼────────┤
      KC_EQL,  KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                                         KC_J,    KC_L,    KC_U,    KC_Y,   KC_SCLN,  KC_GRV,
   //├───────┼────────┼────────┼────────┼────────┼────────┤                                    ├────────┼────────┼────────┼────────┼────────┼────────┤
      KC_MINS, KC_A,    KC_R,    KC_S,    KC_T,    KC_G,                                         KC_M,    KC_N,    KC_E,    KC_I,    KC_O,    KC_QUOT,
@@ -64,11 +102,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //┌────────┬────────┬────────┬────────┬────────┬────────┐                          ┌────────┬────────┬────────┬────────┬────────┬────────┐
      KC_F12,   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                              KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
-     KC_PLUS, KC_PSCR,  KC_INS,  KC_UP,   KC_PGUP, KC_ENT,                            KC_BSLS,  KC_P7,   KC_P8,   KC_P9,   KC_EQL,  KC_TILD,
+     KC_PLUS, KC_PSCR,  KC_PGUP, KC_UP,   KC_INS,  KC_ENT,                            KC_BSLS,  KC_P7,   KC_P8,   KC_P9,   KC_EQL,  KC_TILD,
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
      KC_UNDS,  KC_LPRN, KC_LEFT, KC_DOWN, KC_RGHT, KC_RPRN,                           KC_ASTR,  KC_P4,   KC_P5,   KC_P6,   KC_COLN, KC_DQUO,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-     KC_LCBR,  KC_EXLM, KC_HOME, KC_END,  KC_PGDN, KC_AMPR, KC_BSPC,         _______, KC_PIPE,  KC_P1,   KC_P2,   KC_P3,   KC_QUES, KC_RCBR,
+     KC_LCBR,  KC_EXLM, KC_PGDN, KC_HOME, KC_END,  KC_AMPR, KC_BSPC,         _______, KC_PIPE,  KC_P1,   KC_P2,   KC_P3,   KC_QUES, KC_RCBR,
   //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
                                     _______, _______, _______,                   KC_SPC,   _______, KC_P0
                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
@@ -76,15 +114,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_FN2] = LAYOUT(
   //┌────────┬────────┬────────┬────────┬────────┬────────┐                          ┌────────┬────────┬────────┬────────┬────────┬────────┐
-     KC_F12,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                              KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,
+LSFT(KC_F12), LSFT(KC_F1), LSFT(KC_F2), LSFT(KC_F3), LSFT(KC_F4), LSFT(KC_F5), LSFT(KC_F6), LSFT(KC_F7), LSFT(KC_F8), LSFT(KC_F9), LSFT(KC_F10), LSFT(KC_F11),
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
-     RGB_TOG, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC,                            KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, _______,
+     RGB_HUI,  MACRO01, MACRO02, MACRO03, MACRO04, MACRO05,                            MACRO01, KC_MRWD, KC_VOLU, KC_MFFD, MACRO02, MACRO03,
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
-     RGB_MOD, KC_MPRV, KC_MNXT, KC_VOLU, KC_PGUP, KC_UNDS,                            KC_EQL,  KC_HOME, RGB_HUI, RGB_SAI, RGB_VAI, KC_BSLS,
+     RGB_HUD,  MACRO06, MACRO07, MACRO08, MACRO09, MACRO10,                            RGB_MOD, KC_MSTP, KC_VOLD, KC_MPLY, RGB_VAI, RGB_SPI,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-     QK_BOOT, KC_MSTP, KC_MPLY, KC_VOLD, KC_PGDN, KC_MINS, KC_LPRN,          _______, KC_PLUS, KC_END,  RGB_HUD, RGB_SAD, RGB_VAD, _______,
+     QK_BOOT,  MACRO11, MACRO12, MACRO13, MACRO14, MACRO15, _______,         _______,  RGB_RMOD, KC_MPRV, KC_MUTE, KC_MNXT, RGB_VAD, RGB_SPD,
   //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
-                                    _______, _______, _______,                   _______, _______, _______
+                                    _______, _______, _______,                    RGB_TOG, _______,  TG(1)
                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
   ),
 
