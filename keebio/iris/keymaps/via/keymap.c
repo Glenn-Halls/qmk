@@ -32,9 +32,9 @@ typedef struct {
     td_state_t state;
 } td_tap_t;
 
-// Double-tap keys
+// TapDance keys
 enum {
-    WIN_CAPS,
+    WIN_CAPS_L1,
     ENT_L235_L0,
 };
 
@@ -85,7 +85,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_MAIN] = LAYOUT(
   //┌───────┬────────┬────────┬────────┬────────┬────────┐                                    ┌────────┬────────┬────────┬────────┬────────┬────────┐
-     KC_ESC,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                                         KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    TD(WIN_CAPS),
+     KC_ESC,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                                         KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    TD(WIN_CAPS_L1),
   //├───────┼────────┼────────┼────────┼────────┼────────┤                                    ├────────┼────────┼────────┼────────┼────────┼────────┤
      KC_EQL,  KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                                         KC_J,    KC_L,    KC_U,    KC_Y,   KC_SCLN,  KC_GRV,
   //├───────┼────────┼────────┼────────┼────────┼────────┤                                    ├────────┼────────┼────────┼────────┼────────┼────────┤
@@ -222,6 +222,19 @@ static td_tap_t enttap_state = {
     .state = TD_NONE
 };
 
+
+/*
+*   TapDance for ENTER Key:
+*   tap = enter
+*   hold = layer 2
+*   double-tap = 2x enter
+*   double-hold = layer 3
+*   double-single-tap = 2x enter
+*   triple-tap = reset to layer 0
+*   triple-hold = layer 5
+*   triple-single-tap = 3x enter
+*   Y > 3 taps = Yx enter
+*/
 void ent_finished(qk_tap_dance_state_t *state, void *user_data) {
     enttap_state.state = cur_dance(state);
     switch (enttap_state.state) {
@@ -260,10 +273,42 @@ void ent_reset(qk_tap_dance_state_t *state, void *user_data) {
     enttap_state.state = TD_NONE;
 }
 
+/*
+*   TapDance for WIN_CAPS_L1 Key:
+*   tap = windows
+*   hold = windows
+*   double-tap = CAPS off & CAPS_WORD off
+*   double-hold = windows & layer 1
+*   double-single-tap = CAPS off & CAPS_WORD off
+*/
+void win_finished(qk_tap_dance_state_t *state, void *user_data) {
+    enttap_state.state = cur_dance(state);
+    switch (enttap_state.state) {
+        case TD_SINGLE_TAP: register_code(KC_RGUI); break;
+        case TD_SINGLE_HOLD: register_mods(MOD_BIT(KC_RGUI)); break;
+        case TD_DOUBLE_TAP: caps_word_off(); register_code(KC_CAPS); break;
+        case TD_DOUBLE_HOLD: register_mods(MOD_BIT(KC_RGUI)); layer_on(_FN1); break;
+        case TD_DOUBLE_SINGLE_TAP: caps_word_off(); register_code(KC_CAPS); break;
+        default: break;
+    }
+}
+
+void win_reset(qk_tap_dance_state_t *state, void *user_data) {
+    switch (enttap_state.state) {
+        case TD_SINGLE_TAP: unregister_code(KC_RGUI); break;
+        case TD_SINGLE_HOLD: unregister_mods(MOD_BIT(KC_RGUI)); break;
+        case TD_DOUBLE_TAP: unregister_code(KC_CAPS); break;
+        case TD_DOUBLE_HOLD: unregister_mods(MOD_BIT(KC_RGUI)); layer_off(_FN1); break;
+        case TD_DOUBLE_SINGLE_TAP: unregister_code(KC_CAPS); break;
+        default: break;
+    }
+    enttap_state.state = TD_NONE;
+}
+
 // Tap Dance definitions
 qk_tap_dance_action_t tap_dance_actions[] = {
-    // Tap once for Windows key, twice for Caps Lock
-    [WIN_CAPS] = ACTION_TAP_DANCE_DOUBLE(KC_RGUI, KC_CAPS),
+    // Tap once for Windows key, twice for Caps Lock with caps word off, twice and hold for win and L1
+    [WIN_CAPS_L1] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, win_finished, win_reset),
     // Tap once for Enter, hold for L2, double hold for L3
     [ENT_L235_L0] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, ent_finished, ent_reset),
 };
