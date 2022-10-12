@@ -34,8 +34,8 @@ typedef struct {
 
 // TapDance keys
 enum {
-    WIN_CAPS_L1,
-    ENT_L235_L0,
+    WIN_L1_RESET,
+    // ENT_L235_L0,
 };
 
 // Macro Definitions
@@ -85,7 +85,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_MAIN] = LAYOUT(
   //┌───────┬────────┬────────┬────────┬────────┬────────┐                                    ┌────────┬────────┬────────┬────────┬────────┬────────┐
-     KC_ESC,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                                         KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    TD(WIN_CAPS_L1),
+     KC_ESC,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                                         KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    TD(WIN_L1_RESET),
   //├───────┼────────┼────────┼────────┼────────┼────────┤                                    ├────────┼────────┼────────┼────────┼────────┼────────┤
      KC_EQL,  KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                                         KC_J,    KC_L,    KC_U,    KC_Y,   KC_SCLN,  KC_GRV,
   //├───────┼────────┼────────┼────────┼────────┼────────┤                                    ├────────┼────────┼────────┼────────┼────────┼────────┤
@@ -93,13 +93,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //├───────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌──────────────────┼────────┼────────┼────────┼────────┼────────┼────────┤
      KC_LBRC, KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,    LT(1,KC_TAB),    MT(MOD_RSFT,KC_DEL), KC_K,    KC_H,    KC_COMM, KC_DOT, KC_SLSH, KC_RBRC,
   //└───────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────────────┬─┴────────┴───┬────┴───┬────┴────────┴────────┴────────┘
-                                    KC_LALT, KC_LCTL, MT(MOD_LSFT,KC_BSPC),    LT(1,KC_SPC), TD(ENT_L235_L0), CAPS_WORD
+                                    KC_LALT, KC_LCTL, MT(MOD_LSFT,KC_BSPC),    LT(1,KC_SPC),  LT(2,KC_ENT), CAPS_WORD
                                 // └────────┴────────┴────────┘                └────────────┴──────────────┴────────┘
   ),
 
   [_FN1] = LAYOUT(
   //┌────────┬────────┬────────┬────────┬────────┬────────┐                          ┌────────┬────────┬────────┬────────┬────────┬────────┐
-     KC_F12,   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                              KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,
+     KC_F12,   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                              KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  _______,
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
      KC_PLUS, KC_PSCR,  KC_PGUP, KC_UP,   KC_INS,  KC_ENT,                            KC_BSLS,  KC_P7,   KC_P8,   KC_P9,   KC_EQL,  KC_TILD,
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
@@ -113,7 +113,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_FN2] = LAYOUT(
   //┌────────┬────────┬────────┬────────┬────────┬────────┐                          ┌────────┬────────┬────────┬────────┬────────┬────────┐
-LSFT(KC_F12), LSFT(KC_F1), LSFT(KC_F2), LSFT(KC_F3), LSFT(KC_F4), LSFT(KC_F5), LSFT(KC_F6), LSFT(KC_F7), LSFT(KC_F8), LSFT(KC_F9), LSFT(KC_F10), LSFT(KC_F11),
+LSFT(KC_F12), LSFT(KC_F1), LSFT(KC_F2), LSFT(KC_F3), LSFT(KC_F4), LSFT(KC_F5), LSFT(KC_F6), LSFT(KC_F7), LSFT(KC_F8), LSFT(KC_F9), LSFT(KC_F10), _______,
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
      RGB_HUI,  MACRO01, MACRO02, MACRO03, MACRO04, MACRO05,                            MACRO01, KC_MRWD, KC_VOLU, KC_MFFD, MACRO02, MACRO03,
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
@@ -141,7 +141,7 @@ LSFT(KC_F12), LSFT(KC_F1), LSFT(KC_F2), LSFT(KC_F3), LSFT(KC_F4), LSFT(KC_F5), L
 
   [_FN4] = LAYOUT(
   //┌───────┬────────┬────────┬────────┬────────┬────────┐                 ┌────────┬────────┬────────┬────────┬────────┬────────┐
-     KC_ESC,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                      KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_BSPC,
+     KC_ESC,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                      KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    _______,
   //├───────┼────────┼────────┼────────┼────────┼────────┤                 ├────────┼────────┼────────┼────────┼────────┼────────┤
      KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                      KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_DEL,
   //├───────┼────────┼────────┼────────┼────────┼────────┤                 ├────────┼────────┼────────┼────────┼────────┼────────┤
@@ -149,13 +149,13 @@ LSFT(KC_F12), LSFT(KC_F1), LSFT(KC_F2), LSFT(KC_F3), LSFT(KC_F4), LSFT(KC_F5), L
   //├───────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
      KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_HOME,          KC_END,  KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,
   //└───────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
-                                    KC_LGUI, FN_MO13, MT(MOD_LSFT,KC_BSPC),    LT(1,KC_SPC), _______, CAPS_WORD
+                                    KC_LGUI, FN_MO13, _______,                    LT(1,KC_SPC), _______, CAPS_WORD
                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
   ),
 
   [_FN5] = LAYOUT(
   //┌───────┬────────┬────────┬────────┬────────┬────────┐                 ┌────────┬────────┬────────┬────────┬────────┬────────┐
-     KC_ESC,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                      KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_BSPC,
+     KC_ESC,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                      KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    _______,
   //├───────┼────────┼────────┼────────┼────────┼────────┤                 ├────────┼────────┼────────┼────────┼────────┼────────┤
      KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                      KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_DEL,
   //├───────┼────────┼────────┼────────┼────────┼────────┤                 ├────────┼────────┼────────┼────────┼────────┼────────┤
@@ -176,6 +176,8 @@ bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
         case MT(MOD_LSFT,KC_BSPC):
             return true;
         case LT(1,KC_SPC):
+            return true;
+        case LT(2,KC_ENT):
             return true;
         default:
             return false;
@@ -235,43 +237,43 @@ static td_tap_t enttap_state = {
 *   triple-single-tap = 3x enter
 *   Y > 3 taps = Yx enter
 */
-void ent_finished(qk_tap_dance_state_t *state, void *user_data) {
-    enttap_state.state = cur_dance(state);
-    switch (enttap_state.state) {
-        case TD_SINGLE_TAP: register_code(KC_ENT); break;
-        case TD_SINGLE_HOLD: layer_on(_FN2); break;
-        case TD_DOUBLE_TAP: tap_code(KC_ENT); register_code(KC_ENT); break;
-        case TD_DOUBLE_HOLD: layer_on(_FN3); break;
-        case TD_DOUBLE_SINGLE_TAP: tap_code(KC_ENT); register_code(KC_ENT); break;
-        case TD_TRIPLE_HOLD: layer_on(_FN5); break;
-        case TD_TRIPLE_TAP: layer_off(_FN1); layer_off(_FN2); layer_off(_FN3); layer_off(_FN4); layer_off(_FN5); break;
-        case TD_TRIPLE_SINGLE_TAP: register_code(KC_ENT); break;
-        case TD_QUAD_TAP: register_code(KC_ENT); break;
-        default: break;
-    }
-}
+// void ent_finished(qk_tap_dance_state_t *state, void *user_data) {
+//     enttap_state.state = cur_dance(state);
+//     switch (enttap_state.state) {
+//         case TD_SINGLE_TAP: register_code(KC_ENT); break;
+//         case TD_SINGLE_HOLD: layer_on(_FN2); break;
+//         case TD_DOUBLE_TAP: tap_code(KC_ENT); register_code(KC_ENT); break;
+//         case TD_DOUBLE_HOLD: layer_on(_FN3); break;
+//         case TD_DOUBLE_SINGLE_TAP: tap_code(KC_ENT); register_code(KC_ENT); break;
+//         case TD_TRIPLE_HOLD: layer_on(_FN5); break;
+//         case TD_TRIPLE_TAP: layer_off(_FN1); layer_off(_FN2); layer_off(_FN3); layer_off(_FN4); layer_off(_FN5); break;
+//         case TD_TRIPLE_SINGLE_TAP: register_code(KC_ENT); break;
+//         case TD_QUAD_TAP: register_code(KC_ENT); break;
+//         default: break;
+//     }
+// }
 
-void ent_reset(qk_tap_dance_state_t *state, void *user_data) {
-    switch (enttap_state.state) {
-        case TD_SINGLE_TAP: unregister_code(KC_ENT); break;
-        case TD_SINGLE_HOLD: layer_off(_FN2); break;
-        case TD_DOUBLE_TAP: unregister_code(KC_ENT); break;
-        case TD_DOUBLE_HOLD: layer_off(_FN3); break;
-        case TD_DOUBLE_SINGLE_TAP: unregister_code(KC_ENT); break;
-        case TD_TRIPLE_HOLD: layer_off(_FN5); break;
-        case TD_TRIPLE_TAP: layer_on(_MAIN); break;
-        case TD_TRIPLE_SINGLE_TAP:
-        case TD_QUAD_TAP: {
-            for (int i = 1; i < state->count; i++) {
-               tap_code(KC_ENT);
-            }
-            unregister_code(KC_ENT);
-            break;
-        }
-        default: break;
-    }
-    enttap_state.state = TD_NONE;
-}
+// void ent_reset(qk_tap_dance_state_t *state, void *user_data) {
+//     switch (enttap_state.state) {
+//         case TD_SINGLE_TAP: unregister_code(KC_ENT); break;
+//         case TD_SINGLE_HOLD: layer_off(_FN2); break;
+//         case TD_DOUBLE_TAP: unregister_code(KC_ENT); break;
+//         case TD_DOUBLE_HOLD: layer_off(_FN3); break;
+//         case TD_DOUBLE_SINGLE_TAP: unregister_code(KC_ENT); break;
+//         case TD_TRIPLE_HOLD: layer_off(_FN5); break;
+//         case TD_TRIPLE_TAP: layer_on(_MAIN); break;
+//         case TD_TRIPLE_SINGLE_TAP:
+//         case TD_QUAD_TAP: {
+//             for (int i = 1; i < state->count; i++) {
+//                tap_code(KC_ENT);
+//             }
+//             unregister_code(KC_ENT);
+//             break;
+//         }
+//         default: break;
+//     }
+//     enttap_state.state = TD_NONE;
+// }
 
 /*
 *   TapDance for WIN_CAPS_L1 Key:
@@ -286,9 +288,9 @@ void win_finished(qk_tap_dance_state_t *state, void *user_data) {
     switch (enttap_state.state) {
         case TD_SINGLE_TAP: register_code(KC_RGUI); break;
         case TD_SINGLE_HOLD: register_mods(MOD_BIT(KC_RGUI)); break;
-        case TD_DOUBLE_TAP: caps_word_off(); register_code(KC_CAPS); break;
+        case TD_DOUBLE_TAP: layer_off(_FN1); layer_off(_FN2); layer_off(_FN3); layer_off(_FN4); layer_off(_FN5); break;
         case TD_DOUBLE_HOLD: register_mods(MOD_BIT(KC_RGUI)); layer_on(_FN1); break;
-        case TD_DOUBLE_SINGLE_TAP: caps_word_off(); register_code(KC_CAPS); break;
+        case TD_DOUBLE_SINGLE_TAP: layer_off(_FN1); layer_off(_FN2); layer_off(_FN3); layer_off(_FN4); layer_off(_FN5); break;
         default: break;
     }
 }
@@ -297,9 +299,9 @@ void win_reset(qk_tap_dance_state_t *state, void *user_data) {
     switch (enttap_state.state) {
         case TD_SINGLE_TAP: unregister_code(KC_RGUI); break;
         case TD_SINGLE_HOLD: unregister_mods(MOD_BIT(KC_RGUI)); break;
-        case TD_DOUBLE_TAP: unregister_code(KC_CAPS); break;
+        case TD_DOUBLE_TAP: layer_on(_MAIN); break;
         case TD_DOUBLE_HOLD: unregister_mods(MOD_BIT(KC_RGUI)); layer_off(_FN1); break;
-        case TD_DOUBLE_SINGLE_TAP: unregister_code(KC_CAPS); break;
+        case TD_DOUBLE_SINGLE_TAP: layer_on(_MAIN); break;
         default: break;
     }
     enttap_state.state = TD_NONE;
@@ -308,7 +310,7 @@ void win_reset(qk_tap_dance_state_t *state, void *user_data) {
 // Tap Dance definitions
 qk_tap_dance_action_t tap_dance_actions[] = {
     // Tap once for Windows key, twice for Caps Lock with caps word off, twice and hold for win and L1
-    [WIN_CAPS_L1] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, win_finished, win_reset),
+    [WIN_L1_RESET] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, win_finished, win_reset),
     // Tap once for Enter, hold for L2, double hold for L3
-    [ENT_L235_L0] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, ent_finished, ent_reset),
+    // [ENT_L235_L0] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, ent_finished, ent_reset),
 };
