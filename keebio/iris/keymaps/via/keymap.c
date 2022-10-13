@@ -35,20 +35,34 @@ typedef struct {
 // TapDance keys
 enum {
     WIN_L1_RESET,
+    CW_CL,
     // ENT_L235_L0,
 };
 
 // Macro Definitions
 enum custom_keycodes {
-    TEST = SAFE_RANGE,
-    QMKURL,
-    MY_OTHER_MACRO,
+    MCR_00 = SAFE_RANGE,
+    MCR_01,
+    MCR_02,
+    MCR_03,
+    MCR_04,
+    MCR_05,
+    MCR_06,
+    MCR_07,
+    MCR_08,
+    MCR_09,
+    MCR_10,
+    MCR_11,
+    MCR_12,
+    MCR_13,
+    MCR_14,
+    MCR_15,
 };
 
 // Macros
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-    case TEST:
+    case MCR_00:
         if (record->event.pressed) {
             // when keycode QMKBEST is pressed
             SEND_STRING("Testing 1, 2, 3...   Testing 1, 2, 3...");
@@ -57,20 +71,40 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }
         break;
 
-    case QMKURL:
+    case MCR_01:
         if (record->event.pressed) {
-            // when keycode QMKURL is pressed
-            SEND_STRING("https://qmk.fm/\n");
-        } else {
-            // when keycode QMKURL is released
+            SEND_STRING("System.out.print(\"\");" SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT));
         }
         break;
 
-    case MY_OTHER_MACRO:
+    case MCR_02:
+    //  Starcraft 2 QUIT 
         if (record->event.pressed) {
-           SEND_STRING(SS_TAP(X_F10) SS_DELAY(23) SS_TAP(X_N)); // Quit game sc2
+            SEND_STRING(SS_TAP(X_F10) SS_DELAY(23) SS_TAP(X_N));
         }
         break;
+
+    case MCR_03:
+    //  Java: PSVM
+        if (record->event.pressed) {
+            SEND_STRING("public static void main(String[] args) {}" SS_TAP(X_LEFT) SS_TAP(X_ENT) SS_TAP(X_ENT) SS_TAP(X_ENT) SS_TAP(X_UP));
+        }
+        break;
+
+    case MCR_04:
+    // Java: print
+        if (record->event.pressed) {
+            SEND_STRING("System.out.print(\"\");" SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT));
+        }
+        break;
+
+    case MCR_05:
+    //  Java: println
+        if (record->event.pressed) {
+            SEND_STRING("System.out.println(\"\");" SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT));
+        }
+        break;
+
     }
     return true;
 };
@@ -93,7 +127,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //├───────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌──────────────────┼────────┼────────┼────────┼────────┼────────┼────────┤
      KC_LBRC, KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,    LT(1,KC_TAB),    MT(MOD_RSFT,KC_DEL), KC_K,    KC_H,    KC_COMM, KC_DOT, KC_SLSH, KC_RBRC,
   //└───────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────────────┬─┴────────┴───┬────┴───┬────┴────────┴────────┴────────┘
-                                    KC_LALT, KC_LCTL, MT(MOD_LSFT,KC_BSPC),    LT(1,KC_SPC),  LT(2,KC_ENT), CAPS_WORD
+                                    KC_LALT, KC_LCTL, MT(MOD_LSFT,KC_BSPC),    LT(1,KC_SPC),  LT(2,KC_ENT),  TD(CW_CL)
                                 // └────────┴────────┴────────┘                └────────────┴──────────────┴────────┘
   ),
 
@@ -115,11 +149,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //┌────────┬────────┬────────┬────────┬────────┬────────┐                          ┌────────┬────────┬────────┬────────┬────────┬────────┐
 LSFT(KC_F12), LSFT(KC_F1), LSFT(KC_F2), LSFT(KC_F3), LSFT(KC_F4), LSFT(KC_F5), LSFT(KC_F6), LSFT(KC_F7), LSFT(KC_F8), LSFT(KC_F9), LSFT(KC_F10), _______,
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
-     RGB_HUI,  MACRO01, MACRO02, MACRO03, MACRO04, MACRO05,                            MACRO01, KC_MRWD, KC_VOLU, KC_MFFD, MACRO02, MACRO03,
+     RGB_HUI, RGB_RMOD, KC_MRWD, KC_VOLU, KC_MFFD, RGB_MOD,                            MCR_10,  MCR_07,  MCR_08,  MCR_09,  MCR_13,  MACRO00,
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
-     RGB_HUD,  MACRO06, MACRO07, MACRO08, MACRO09, MACRO10,                            RGB_MOD, KC_MSTP, KC_VOLD, KC_MPLY, RGB_VAI, RGB_SPI,
+     RGB_HUD,  RGB_VAI, KC_MSTP, KC_VOLD, KC_MPLY, RGB_SPI,                            MCR_11,  MCR_04,  MCR_05,  MCR_06,  MCR_14,  MACRO01,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-     QK_BOOT,  MACRO11, MACRO12, MACRO13, MACRO14, MACRO15, _______,         _______,  RGB_RMOD, KC_MPRV, KC_MUTE, KC_MNXT, RGB_VAD, RGB_SPD,
+     QK_BOOT,  RGB_VAD, KC_MPRV, KC_MUTE, KC_MNXT, RGB_SPD, _______,         _______,  MCR_12,  MCR_01,  MCR_02,  MCR_03,  MCR_15,  MCR_00,
   //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
                                     _______, _______, _______,                    RGB_TOG, _______,  TG(1)
                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
@@ -149,7 +183,7 @@ LSFT(KC_F12), LSFT(KC_F1), LSFT(KC_F2), LSFT(KC_F3), LSFT(KC_F4), LSFT(KC_F5), L
   //├───────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
      KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_HOME,          KC_END,  KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,
   //└───────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
-                                    KC_LGUI, FN_MO13, _______,                    LT(1,KC_SPC), _______, CAPS_WORD
+                                    KC_LGUI, FN_MO13, _______,                    LT(1,KC_SPC), _______, TD(CW_CL)
                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
   ),
 
@@ -163,7 +197,7 @@ LSFT(KC_F12), LSFT(KC_F1), LSFT(KC_F2), LSFT(KC_F3), LSFT(KC_F4), LSFT(KC_F5), L
   //├───────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
      KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_HOME,          KC_END,  KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,
   //└───────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
-                                    KC_LGUI, FN_MO13, MT(MOD_LSFT,KC_BSPC),    LT(1,KC_SPC), _______, CAPS_WORD
+                                    KC_LGUI, FN_MO13, MT(MOD_LSFT,KC_BSPC),    LT(1,KC_SPC), _______, TD(CW_CL)
                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
   )
 };
@@ -276,12 +310,12 @@ static td_tap_t enttap_state = {
 // }
 
 /*
-*   TapDance for WIN_CAPS_L1 Key:
+*   TapDance for WIN_L1_RESET Key:
 *   tap = windows
 *   hold = windows
-*   double-tap = CAPS off & CAPS_WORD off
-*   double-hold = windows & layer 1
-*   double-single-tap = CAPS off & CAPS_WORD off
+*   double-tap = all layers off and switch to layer 0
+*   double-hold = windows & layer 1 (for screen dragging)
+*   double-single-tap = same as double-tap
 */
 void win_finished(qk_tap_dance_state_t *state, void *user_data) {
     enttap_state.state = cur_dance(state);
@@ -307,10 +341,45 @@ void win_reset(qk_tap_dance_state_t *state, void *user_data) {
     enttap_state.state = TD_NONE;
 }
 
+
+/*
+*   TapDance for CW_CL Key:
+*   tap = Caps Word
+*   hold = LAlt + Layer 1
+*   double-tap = Caps Word off and toggle Caps Lock
+*   double-hold = LAlt + LCtrl + Layer 1
+*   double-single-tap = same as double-tap
+*/
+void caps_finished(qk_tap_dance_state_t *state, void *user_data) {
+    enttap_state.state = cur_dance(state);
+    switch (enttap_state.state) {
+        case TD_SINGLE_TAP: caps_word_toggle(); break;
+        case TD_SINGLE_HOLD: register_mods(MOD_BIT(KC_LALT)); layer_on(_FN1); break;
+        case TD_DOUBLE_TAP: caps_word_off(); register_code(KC_CAPS); break;
+        case TD_DOUBLE_HOLD: register_mods(MOD_BIT(KC_LCTL) | MOD_BIT(KC_LALT)); layer_on(_FN1); break;
+        case TD_DOUBLE_SINGLE_TAP: caps_word_off(); register_code(KC_CAPS); break;
+        default: break;
+    }
+}
+
+void caps_reset(qk_tap_dance_state_t *state, void *user_data) {
+    switch (enttap_state.state) {
+        case TD_SINGLE_TAP: break;
+        case TD_SINGLE_HOLD: unregister_mods(MOD_BIT(KC_LALT)); layer_off(_FN1);break;
+        case TD_DOUBLE_TAP: unregister_code(KC_CAPS); break;
+        case TD_DOUBLE_HOLD: unregister_mods(MOD_BIT(KC_LCTL) | MOD_BIT(KC_LALT)); layer_off(_FN1); break;
+        case TD_DOUBLE_SINGLE_TAP: unregister_code(KC_CAPS); break;
+        default: break;
+    }
+    enttap_state.state = TD_NONE;
+}
+
 // Tap Dance definitions
 qk_tap_dance_action_t tap_dance_actions[] = {
-    // Tap once for Windows key, twice for Caps Lock with caps word off, twice and hold for win and L1
+    // Tap once for Windows key, twice for Layer 0, twice and hold for win and L1
     [WIN_L1_RESET] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, win_finished, win_reset),
+    // Tap once to toggle Caps Word, hold for alt (L1), tap twice for Caps Lock, double hold for ctrl + alt (L1),
+    [CW_CL] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, caps_finished, caps_reset),
     // Tap once for Enter, hold for L2, double hold for L3
     // [ENT_L235_L0] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, ent_finished, ent_reset),
 };
