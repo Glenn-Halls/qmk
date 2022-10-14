@@ -218,6 +218,23 @@ bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
     }
 }
 
+uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case MT(MOD_LSFT,KC_BSPC):
+            return 120;
+        case LT(1,KC_SPC):
+            return 150;
+        case LT(2,KC_ENT):
+            return 200;
+        case TD(WIN_L1_RESET):
+            return 300;
+        case TD(CW_CL):
+            return 300;
+        default:
+            return TAPPING_TERM;
+    }
+}
+
 td_state_t cur_dance(qk_tap_dance_state_t *state) {
     if (state->count == 1) {
         // altered below if conditions from documented || to && to single tap for faster typing
