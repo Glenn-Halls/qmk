@@ -125,6 +125,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //#    endif
 #endif
 
+// defines the length of the tapping term, in MS
+#define TAPPING_TERM 120
+
 // inputs Layertoggle keypress on keypress instead of waiting for TAPPING_TERM delay
 #define HOLD_ON_OTHER_KEY_PRESS
 
