@@ -36,7 +36,7 @@ typedef struct {
 enum {
     WIN_L1_RESET,
     CW_CL,
-    // ENT_L235_L0,
+    ENT_L235_L0,
 };
 
 // Macro Definitions
@@ -73,7 +73,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
     case MCR_01:
         if (record->event.pressed) {
-            SEND_STRING("System.out.print(\"\");" SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT));
+            SEND_STRING("HYPR(");
+            tap_code16(C(KC_RIGHT));
+            tap_code16(S(KC_0));
         }
         break;
 
@@ -127,7 +129,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //├───────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌──────────────────┼────────┼────────┼────────┼────────┼────────┼────────┤
      KC_LBRC, KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,    LT(1,KC_TAB),    MT(MOD_RSFT,KC_DEL), KC_K,    KC_H,    KC_COMM, KC_DOT, KC_SLSH, KC_RBRC,
   //└───────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────────────┬─┴────────┴───┬────┴───┬────┴────────┴────────┴────────┘
-                                    KC_LALT, KC_LCTL, MT(MOD_LSFT,KC_BSPC),    LT(1,KC_SPC),  LT(2,KC_ENT),  TD(CW_CL)
+                                    KC_LALT, KC_LCTL, MT(MOD_LSFT,KC_BSPC),    LT(1,KC_SPC),  TD(ENT_L235_L0),  TD(CW_CL)
                                 // └────────┴────────┴────────┘                └────────────┴──────────────┴────────┘
   ),
 
@@ -221,7 +223,7 @@ bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case MT(MOD_LSFT,KC_BSPC):
-            return 120;
+            return 150;
         case LT(1,KC_SPC):
             return 150;
         case LT(2,KC_ENT):
@@ -288,43 +290,57 @@ static td_tap_t enttap_state = {
 *   triple-single-tap = 3x enter
 *   Y > 3 taps = Yx enter
 */
-// void ent_finished(qk_tap_dance_state_t *state, void *user_data) {
-//     enttap_state.state = cur_dance(state);
-//     switch (enttap_state.state) {
-//         case TD_SINGLE_TAP: register_code(KC_ENT); break;
-//         case TD_SINGLE_HOLD: layer_on(_FN2); break;
-//         case TD_DOUBLE_TAP: tap_code(KC_ENT); register_code(KC_ENT); break;
-//         case TD_DOUBLE_HOLD: layer_on(_FN3); break;
-//         case TD_DOUBLE_SINGLE_TAP: tap_code(KC_ENT); register_code(KC_ENT); break;
-//         case TD_TRIPLE_HOLD: layer_on(_FN5); break;
-//         case TD_TRIPLE_TAP: layer_off(_FN1); layer_off(_FN2); layer_off(_FN3); layer_off(_FN4); layer_off(_FN5); break;
-//         case TD_TRIPLE_SINGLE_TAP: register_code(KC_ENT); break;
-//         case TD_QUAD_TAP: register_code(KC_ENT); break;
-//         default: break;
-//     }
-// }
 
-// void ent_reset(qk_tap_dance_state_t *state, void *user_data) {
-//     switch (enttap_state.state) {
-//         case TD_SINGLE_TAP: unregister_code(KC_ENT); break;
-//         case TD_SINGLE_HOLD: layer_off(_FN2); break;
-//         case TD_DOUBLE_TAP: unregister_code(KC_ENT); break;
-//         case TD_DOUBLE_HOLD: layer_off(_FN3); break;
-//         case TD_DOUBLE_SINGLE_TAP: unregister_code(KC_ENT); break;
-//         case TD_TRIPLE_HOLD: layer_off(_FN5); break;
-//         case TD_TRIPLE_TAP: layer_on(_MAIN); break;
-//         case TD_TRIPLE_SINGLE_TAP:
-//         case TD_QUAD_TAP: {
-//             for (int i = 1; i < state->count; i++) {
-//                tap_code(KC_ENT);
-//             }
-//             unregister_code(KC_ENT);
-//             break;
-//         }
-//         default: break;
-//     }
-//     enttap_state.state = TD_NONE;
-// }
+void ent_tap(qk_tap_dance_state_t *state, void *user_data) {
+    switch (state->count){
+        case 1:
+            layer_on(_FN2); break;
+        case 2:
+            layer_on(_FN3); break;
+        case 3:
+            layer_on(_FN5); break;
+        default: break;
+    }
+}
+
+void ent_finished(qk_tap_dance_state_t *state, void *user_data) {
+    enttap_state.state = cur_dance(state);
+    switch (enttap_state.state) {
+        case TD_SINGLE_TAP: register_code(KC_ENT); break;
+        // case TD_SINGLE_HOLD: layer_on(_FN2); break;
+        case TD_DOUBLE_TAP: tap_code(KC_ENT); register_code(KC_ENT); break;
+        // case TD_DOUBLE_HOLD: layer_on(_FN3); break;
+        case TD_DOUBLE_SINGLE_TAP: tap_code(KC_ENT); register_code(KC_ENT); break;
+        // case TD_TRIPLE_HOLD: layer_on(_FN5); break;
+        case TD_TRIPLE_TAP: layer_off(_FN1); layer_off(_FN4); break;
+        case TD_TRIPLE_SINGLE_TAP: register_code(KC_ENT); break;
+        case TD_QUAD_TAP: register_code(KC_ENT); break;
+        default: break;
+    }
+}
+
+void ent_reset(qk_tap_dance_state_t *state, void *user_data) {
+    switch (enttap_state.state) {
+        case TD_SINGLE_TAP: unregister_code(KC_ENT); break;
+        // case TD_SINGLE_HOLD: layer_off(_FN2); break;
+        case TD_DOUBLE_TAP: unregister_code(KC_ENT); break;
+        // case TD_DOUBLE_HOLD: layer_off(_FN3); break;
+        case TD_DOUBLE_SINGLE_TAP: unregister_code(KC_ENT); break;
+        // case TD_TRIPLE_HOLD: layer_off(_FN5); break;
+        case TD_TRIPLE_TAP: layer_on(_MAIN); break;
+        case TD_TRIPLE_SINGLE_TAP:
+        case TD_QUAD_TAP: {
+            for (int i = 1; i < state->count; i++) {
+               tap_code(KC_ENT);
+            }
+            unregister_code(KC_ENT);
+            break;
+        }
+        default: break;
+    }
+    layer_off(_FN2); layer_off(_FN3); layer_off(_FN5);
+    enttap_state.state = TD_NONE;
+}
 
 /*
 *   TapDance for WIN_L1_RESET Key:
@@ -398,5 +414,5 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     // Tap once to toggle Caps Word, hold for alt (L1), tap twice for Caps Lock, double hold for ctrl + alt (L1),
     [CW_CL] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, caps_finished, caps_reset),
     // Tap once for Enter, hold for L2, double hold for L3
-    // [ENT_L235_L0] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, ent_finished, ent_reset),
+    [ENT_L235_L0] = ACTION_TAP_DANCE_FN_ADVANCED(ent_tap, ent_finished, ent_reset),
 };
