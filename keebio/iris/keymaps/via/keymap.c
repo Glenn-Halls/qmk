@@ -94,16 +94,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         break;
 
     case MCR_04:
-    // Java: print
+    // Kotlin: print
         if (record->event.pressed) {
-            SEND_STRING("System.out.print(\"\");" SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT));
+            SEND_STRING("print(\"\")" SS_TAP(X_LEFT) SS_TAP(X_LEFT));
         }
         break;
 
     case MCR_05:
-    //  Java: println
+    //  Kotlin: println
         if (record->event.pressed) {
-            SEND_STRING("System.out.println(\"\");" SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT));
+            SEND_STRING("println(\"\")" SS_TAP(X_LEFT) SS_TAP(X_LEFT));
         }
         break;
 
@@ -133,7 +133,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //├───────┼────────┼────────┼────────┼────────┼────────┤                                    ├────────┼────────┼────────┼────────┼────────┼────────┤
      KC_MINS, KC_A,    KC_R,    KC_S,    KC_T,    KC_G,                                         KC_M,    KC_N,    KC_E,    KC_I,    KC_O,    KC_QUOT,
   //├───────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌──────────────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-     KC_LBRC, KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,    LT(1,KC_TAB),    MT(MOD_RSFT,KC_DEL), KC_K,    KC_H,    KC_COMM, KC_DOT, KC_SLSH, KC_RBRC,
+     KC_LBRC, KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,    LT(1,KC_DEL),    MT(MOD_RSFT,KC_TAB), KC_K,    KC_H,    KC_COMM, KC_DOT, KC_SLSH, KC_RBRC,
   //└───────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────────────┬─┴────────┴───┬────┴───┬────┴────────┴────────┴────────┘
                                     KC_LALT, KC_LCTL, MT(MOD_LSFT,KC_BSPC),    LT(1,KC_SPC),  TD(ENT_L235_L0),  TD(CW_CL)
                                 // └────────┴────────┴────────┘                └────────────┴──────────────┴────────┘
@@ -147,7 +147,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
      KC_UNDS,  KC_LPRN, KC_LEFT, KC_DOWN, KC_RGHT, KC_RPRN,                           KC_ASTR,  KC_P4,   KC_P5,   KC_P6,   KC_COLN, KC_DQUO,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-     KC_LCBR,  KC_EXLM, KC_PGDN, KC_HOME, KC_END,  KC_AMPR, KC_BSPC,         _______, KC_PIPE,  KC_P1,   KC_P2,   KC_P3,   KC_QUES, KC_RCBR,
+     KC_LCBR,  KC_EXLM, KC_PGDN, KC_HOME, KC_END,  KC_AMPR, KC_BSPC,         _______, KC_PIPE,  KC_P1,   KC_P2,   KC_P3,   KC_P0,   KC_RCBR,
   //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
                                     _______, _______, _______,                   KC_SPC,   _______, KC_P0
                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
