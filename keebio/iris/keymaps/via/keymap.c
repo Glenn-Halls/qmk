@@ -72,6 +72,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         break;
 
     case MCR_01:
+    // QMK - HYPR
         if (record->event.pressed) {
             SEND_STRING("HYPR(");
             tap_code16(C(KC_RIGHT));
@@ -80,16 +81,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         break;
 
     case MCR_02:
-    //  Starcraft 2 QUIT 
+    //  QMK - MEH
         if (record->event.pressed) {
-            SEND_STRING(SS_TAP(X_F10) SS_DELAY(23) SS_TAP(X_N));
+            SEND_STRING("MEH(");
+            tap_code16(C(KC_RIGHT));
+            tap_code16(S(KC_0));
         }
         break;
 
     case MCR_03:
-    //  Java: PSVM
+    //  Android: Ctrl + .
         if (record->event.pressed) {
-            SEND_STRING("public static void main(String[] args) {}" SS_TAP(X_LEFT) SS_TAP(X_ENT) SS_TAP(X_ENT) SS_TAP(X_ENT) SS_TAP(X_UP));
+            tap_code16(C(KC_DOT));
         }
         break;
 
@@ -108,9 +111,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         break;
 
     case MCR_06:
-    //  Java: ps
+    //  Starcraft 2 QUIT 
         if (record->event.pressed) {
-            SEND_STRING("public static ");
+            SEND_STRING(SS_TAP(X_F10) SS_DELAY(23) SS_TAP(X_N));
         }
         break;
     }
