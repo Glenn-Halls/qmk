@@ -348,6 +348,7 @@ void ent_reset(qk_tap_dance_state_t *state, void *user_data) {
         default: break;
     }
     layer_off(_FN2); layer_off(_FN3); layer_off(_FN5);
+    clear_mods();
     enttap_state.state = TD_NONE;
 }
 
@@ -413,6 +414,7 @@ void caps_reset(qk_tap_dance_state_t *state, void *user_data) {
         case TD_DOUBLE_SINGLE_TAP: unregister_code(KC_CAPS); break;
         default: break;
     }
+    layer_off(_FN1);
     enttap_state.state = TD_NONE;
 }
 
