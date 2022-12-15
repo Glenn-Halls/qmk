@@ -303,12 +303,12 @@ static td_tap_t enttap_state = {
 void ent_tap(qk_tap_dance_state_t *state, void *user_data) {
     switch (state->count){
         case 1:
-            layer_on(_FN2); break;
+            break;
         case 2:
-            layer_on(_FN3); break;
+            break;
         case 3:
-            layer_on(_FN5); break;
-        default: break;
+            break;
+        default: tap_code(KC_ENT); break;
     }
 }
 
@@ -316,14 +316,13 @@ void ent_finished(qk_tap_dance_state_t *state, void *user_data) {
     enttap_state.state = cur_dance(state);
     switch (enttap_state.state) {
         case TD_SINGLE_TAP: register_code(KC_ENT); break;
-        // case TD_SINGLE_HOLD: layer_on(_FN2); break;
-        case TD_DOUBLE_TAP: tap_code(KC_ENT); register_code(KC_ENT); break;
-        // case TD_DOUBLE_HOLD: layer_on(_FN3); break;
-        case TD_DOUBLE_SINGLE_TAP: tap_code(KC_ENT); register_code(KC_ENT); break;
-        // case TD_TRIPLE_HOLD: layer_on(_FN5); break;
+        case TD_SINGLE_HOLD: layer_on(_FN2); break;
+        case TD_DOUBLE_TAP: register_code(KC_ENT); break;
+        case TD_DOUBLE_HOLD: layer_on(_FN3); break;
+        case TD_DOUBLE_SINGLE_TAP: register_code(KC_ENT); break;
+        case TD_TRIPLE_HOLD: layer_on(_FN5); break;
         case TD_TRIPLE_TAP: layer_off(_FN1); layer_off(_FN4); break;
         case TD_TRIPLE_SINGLE_TAP: register_code(KC_ENT); break;
-        case TD_QUAD_TAP: register_code(KC_ENT); break;
         default: break;
     }
 }
@@ -331,23 +330,15 @@ void ent_finished(qk_tap_dance_state_t *state, void *user_data) {
 void ent_reset(qk_tap_dance_state_t *state, void *user_data) {
     switch (enttap_state.state) {
         case TD_SINGLE_TAP: unregister_code(KC_ENT); break;
-        // case TD_SINGLE_HOLD: layer_off(_FN2); break;
-        case TD_DOUBLE_TAP: unregister_code(KC_ENT); break;
-        // case TD_DOUBLE_HOLD: layer_off(_FN3); break;
-        case TD_DOUBLE_SINGLE_TAP: unregister_code(KC_ENT); break;
-        // case TD_TRIPLE_HOLD: layer_off(_FN5); break;
+        case TD_SINGLE_HOLD: layer_off(_FN2); break;
+        case TD_DOUBLE_TAP: unregister_code(KC_ENT); tap_code(KC_ENT); break;
+        case TD_DOUBLE_HOLD: layer_off(_FN3); break;
+        case TD_DOUBLE_SINGLE_TAP: unregister_code(KC_ENT); tap_code(KC_ENT); break;
+        case TD_TRIPLE_HOLD: layer_off(_FN5); break;
         case TD_TRIPLE_TAP: layer_on(_MAIN); break;
-        case TD_TRIPLE_SINGLE_TAP:
-        case TD_QUAD_TAP: {
-            for (int i = 1; i < state->count; i++) {
-               tap_code(KC_ENT);
-            }
-            unregister_code(KC_ENT);
-            break;
-        }
-        default: break;
+        case TD_TRIPLE_SINGLE_TAP: unregister_code(KC_ENT); tap_code(KC_ENT); tap_code(KC_ENT); break;
+        default: tap_code(KC_ENT); tap_code(KC_ENT); tap_code(KC_ENT); break;
     }
-    layer_off(_FN2); layer_off(_FN3); layer_off(_FN5);
     clear_mods();
     enttap_state.state = TD_NONE;
 }
