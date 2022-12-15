@@ -112,12 +112,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // #        define ENABLE_RGB_MATRIX_SOLID_SPLASH
 // #        define ENABLE_RGB_MATRIX_SOLID_MULTISPLASH
 #        define RGB_MATRIX_MAXIMUM_BRIGHTNESS 120
-#        define RGB_MATRIX_STARTUP_VAL 90
-#        define RGB_MATRIX_STARTUP_HUE 190
-#        define RGB_MATRIX_STARTUP_SAT 255
-#        define RGB_MATRIX_STARTUP_SPD 120
-#        define RGB_MATRIX_STARTUP_MODE RGB_MATRIX_BAND_VAL
-#        define DRIVER_LED_TOTAL RGBLED_NUM
+#        define RGB_MATRIX_DEFAULT_VAL 90
+#        define RGB_MATRIX_DEFAULT_HUE 190
+#        define RGB_MATRIX_DEFAULT_SAT 255
+#        define RGB_MATRIX_DEFAULT_SPD 120
+#        define RGB_MATRIX_DEFAULT_MODE RGB_MATRIX_BAND_VAL
+#        define RGB_MATRIX_LED_COUNT RGBLED_NUM
 #        define RGB_MATRIX_SPLIT { 34, 34 }
 #        define RGB_DISABLE_WHEN_USB_SUSPENDED
 #        define RGB_MATRIX_KEYPRESSES
