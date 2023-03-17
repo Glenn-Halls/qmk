@@ -120,11 +120,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     return true;
 };
 
-td_state_t cur_dance(qk_tap_dance_state_t *state);
+td_state_t cur_dance(tap_dance_state_t *state);
 
 // For the x tap dance. Put it here so it can be used in any keymap
-void ent_finished(qk_tap_dance_state_t *state, void *user_data);
-void ent_reset(qk_tap_dance_state_t *state, void *user_data);
+void ent_finished(tap_dance_state_t *state, void *user_data);
+void ent_reset(tap_dance_state_t *state, void *user_data);
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -160,9 +160,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //┌────────┬────────┬────────┬────────┬────────┬────────┐                          ┌────────┬────────┬────────┬────────┬────────┬────────┐
 LSFT(KC_F12), LSFT(KC_F1), LSFT(KC_F2), LSFT(KC_F3), LSFT(KC_F4), LSFT(KC_F5), LSFT(KC_F6), LSFT(KC_F7), LSFT(KC_F8), LSFT(KC_F9), LSFT(KC_F10), _______,
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
-     RGB_HUI, RGB_RMOD, KC_MRWD, KC_VOLU, KC_MFFD, RGB_MOD,                            MCR_10,  MCR_07,  MCR_08,  MCR_09,  MCR_13,  MACRO00,
+     RGB_HUI, RGB_RMOD, KC_MRWD, KC_VOLU, KC_MFFD, RGB_MOD,                            MCR_10,  MCR_07,  MCR_08,  MCR_09,  MCR_13,  QK_MACRO_0,
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
-     RGB_HUD,  RGB_VAI, KC_MSTP, KC_VOLD, KC_MPLY, RGB_SPI,                            MCR_11,  MCR_04,  MCR_05,  MCR_06,  MCR_14,  MACRO01,
+     RGB_HUD,  RGB_VAI, KC_MSTP, KC_VOLD, KC_MPLY, RGB_SPI,                            MCR_11,  MCR_04,  MCR_05,  MCR_06,  MCR_14,  QK_MACRO_1,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
      QK_BOOT,  RGB_VAD, KC_MPRV, KC_MUTE, KC_MNXT, RGB_SPD, _______,         _______,  MCR_12,  MCR_01,  MCR_02,  MCR_03,  MCR_15,  MCR_00,
   //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
@@ -194,7 +194,7 @@ LSFT(KC_F12), LSFT(KC_F1), LSFT(KC_F2), LSFT(KC_F3), LSFT(KC_F4), LSFT(KC_F5), L
   //├───────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
      KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_HOME,          KC_END,  KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,
   //└───────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
-                                    KC_LGUI, FN_MO13, _______,                    LT(1,KC_SPC), _______, TD(CW_CL)
+                                    _______, _______, _______,                    LT(1,KC_SPC), _______, TD(CW_CL)
                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
   ),
 
@@ -208,7 +208,7 @@ LSFT(KC_F12), LSFT(KC_F1), LSFT(KC_F2), LSFT(KC_F3), LSFT(KC_F4), LSFT(KC_F5), L
   //├───────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
      KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_HOME,          KC_END,  KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,
   //└───────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
-                                    KC_LGUI, FN_MO13, MT(MOD_LSFT,KC_BSPC),    LT(1,KC_SPC), _______, TD(CW_CL)
+                                    _______, _______, MT(MOD_LSFT,KC_BSPC),    LT(1,KC_SPC), _______, TD(CW_CL)
                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
   )
 };
@@ -246,7 +246,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     }
 }
 
-td_state_t cur_dance(qk_tap_dance_state_t *state) {
+td_state_t cur_dance(tap_dance_state_t *state) {
     if (state->count == 1) {
         // altered below if conditions from documented || to && to single tap for faster typing
         if (state->interrupted && !state->pressed) return TD_SINGLE_TAP;
@@ -300,7 +300,7 @@ static td_tap_t enttap_state = {
 *   Y > 3 taps = Yx enter
 */
 
-void ent_tap(qk_tap_dance_state_t *state, void *user_data) {
+void ent_tap(tap_dance_state_t *state, void *user_data) {
     switch (state->count){
         case 1:
         case 2:
@@ -310,7 +310,7 @@ void ent_tap(qk_tap_dance_state_t *state, void *user_data) {
     }
 }
 
-void ent_finished(qk_tap_dance_state_t *state, void *user_data) {
+void ent_finished(tap_dance_state_t *state, void *user_data) {
     enttap_state.state = cur_dance(state);
     switch (enttap_state.state) {
         case TD_SINGLE_TAP: register_code(KC_ENT); break;
@@ -325,7 +325,7 @@ void ent_finished(qk_tap_dance_state_t *state, void *user_data) {
     }
 }
 
-void ent_reset(qk_tap_dance_state_t *state, void *user_data) {
+void ent_reset(tap_dance_state_t *state, void *user_data) {
     switch (enttap_state.state) {
         case TD_SINGLE_TAP: unregister_code(KC_ENT); break;
         case TD_SINGLE_HOLD: layer_off(_FN2); break;
@@ -349,7 +349,7 @@ void ent_reset(qk_tap_dance_state_t *state, void *user_data) {
 *   double-hold = windows & layer 1 (for screen dragging)
 *   double-single-tap = same as double-tap
 */
-void win_finished(qk_tap_dance_state_t *state, void *user_data) {
+void win_finished(tap_dance_state_t *state, void *user_data) {
     enttap_state.state = cur_dance(state);
     switch (enttap_state.state) {
         case TD_SINGLE_TAP: register_code(KC_RGUI); break;
@@ -361,7 +361,7 @@ void win_finished(qk_tap_dance_state_t *state, void *user_data) {
     }
 }
 
-void win_reset(qk_tap_dance_state_t *state, void *user_data) {
+void win_reset(tap_dance_state_t *state, void *user_data) {
     switch (enttap_state.state) {
         case TD_SINGLE_TAP: unregister_code(KC_RGUI); break;
         case TD_SINGLE_HOLD: unregister_mods(MOD_BIT(KC_RGUI)); break;
@@ -382,7 +382,7 @@ void win_reset(qk_tap_dance_state_t *state, void *user_data) {
 *   double-hold = LAlt + LCtrl + Layer 1
 *   double-single-tap = same as double-tap
 */
-void caps_finished(qk_tap_dance_state_t *state, void *user_data) {
+void caps_finished(tap_dance_state_t *state, void *user_data) {
     enttap_state.state = cur_dance(state);
     switch (enttap_state.state) {
         case TD_SINGLE_TAP: caps_word_toggle(); break;
@@ -394,7 +394,7 @@ void caps_finished(qk_tap_dance_state_t *state, void *user_data) {
     }
 }
 
-void caps_reset(qk_tap_dance_state_t *state, void *user_data) {
+void caps_reset(tap_dance_state_t *state, void *user_data) {
     switch (enttap_state.state) {
         case TD_SINGLE_TAP: break;
         case TD_SINGLE_HOLD: unregister_mods(MOD_BIT(KC_LALT)); layer_off(_FN1);break;
@@ -408,7 +408,7 @@ void caps_reset(qk_tap_dance_state_t *state, void *user_data) {
 }
 
 // Tap Dance definitions
-qk_tap_dance_action_t tap_dance_actions[] = {
+tap_dance_action_t tap_dance_actions[] = {
     // Tap once for Windows key, twice for Layer 0, twice and hold for win and L1
     [WIN_QWERTY] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, win_finished, win_reset),
     // Tap once to toggle Caps Word, hold for alt (L1), tap twice for Caps Lock, double hold for ctrl + alt (L1),
