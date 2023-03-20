@@ -110,7 +110,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }
         break;
 
-    case MCR_06:
+    case MCR_13:
     //  Starcraft 2 QUIT 
         if (record->event.pressed) {
             SEND_STRING(SS_TAP(X_F10) SS_DELAY(23) SS_TAP(X_N));
@@ -176,7 +176,7 @@ LSFT(KC_F12), LSFT(KC_F1), LSFT(KC_F2), LSFT(KC_F3), LSFT(KC_F4), LSFT(KC_F5), L
   //├─────────────┼───────────┼───────────┼───────────┼───────────┼────────────┤                                    ├───────────┼───────────┼─────────────┼───────────┼──────────────┼───────────┤
      HYPR(KC_EQL), HYPR(KC_Q), HYPR(KC_W), HYPR(KC_F), HYPR(KC_P), HYPR(KC_B),                                        HYPR(KC_J), HYPR(KC_L), HYPR(KC_U),   HYPR(KC_Y), HYPR(KC_SCLN), HYPR(KC_GRV),
   //├─────────────┼───────────┼───────────┼───────────┼───────────┼────────────┤                                    ├───────────┼───────────┼─────────────┼───────────┼──────────────┼───────────┤
-     HYPR(KC_MINS), HYPR(KC_A), HYPR(KC_R), HYPR(KC_S), HYPR(KC_T), HYPR(KC_G),                                       HYPR(KC_M), HYPR(KC_N), HYPR(KC_E),   HYPR(KC_I), HYPR(KC_O),    HYPR(KC_QUOT),
+     HYPR(KC_MINS), HYPR(KC_A), HYPR(KC_R), HYPR(KC_S), HYPR(KC_T), HYPR(KC_G),                                       HYPR(KC_M), HYPR(KC_ENT), HYPR(KC_E),   HYPR(KC_I), HYPR(KC_O),    HYPR(KC_QUOT),
   //├─────────────┼───────────┼───────────┼───────────┼───────────┼────────────┼────────┐        ┌──────────────────┼───────────┼───────────┼─────────────┼───────────┼──────────────┼───────────┤
      HYPR(KC_LBRC), HYPR(KC_Z), HYPR(KC_X), HYPR(KC_C), HYPR(KC_D), HYPR(KC_V), _______,                    _______, HYPR(KC_K), HYPR(KC_H), HYPR(KC_COMM),HYPR(KC_DOT),HYPR(KC_SLSH), HYPR(KC_RBRC),
   //└─────────────┴───────────┴───────────┴──────┬────┴──────┬────┴───────┬────┴───┬────┘        └───┬────────────┬─┴───────────┴───┬───────┴───┬─────────┴───────────┴──────────────┴───────────┘
