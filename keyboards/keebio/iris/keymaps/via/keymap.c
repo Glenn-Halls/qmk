@@ -97,16 +97,23 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         break;
 
     case MCR_04:
-    // Kotlin: print
+    // Java: print
         if (record->event.pressed) {
-            SEND_STRING("print(\"\")" SS_TAP(X_LEFT) SS_TAP(X_LEFT));
+            SEND_STRING("System.out.print(\"\");" SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT));
         }
         break;
 
     case MCR_05:
-    //  Kotlin: println
+    //  Java: println
         if (record->event.pressed) {
-            SEND_STRING("println(\"\")" SS_TAP(X_LEFT) SS_TAP(X_LEFT));
+            SEND_STRING("System.out.println(\"\");" SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT));
+        }
+        break;
+    
+    case MCR_06:
+    //  Java PSVM
+        if (record->event.pressed) {
+            SEND_STRING("public static void main(String[] args) {}" SS_TAP(X_LEFT) SS_TAP(X_ENT));
         }
         break;
 
