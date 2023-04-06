@@ -109,8 +109,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             SEND_STRING("System.out.println(\"\");" SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT));
         }
         break;
-    
+
     case MCR_06:
+    // Java: printf
+        if (record->event.pressed) {
+            SEND_STRING("System.out.printf(\"\");" SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT));
+        }
+        break;
+    
+    case MCR_09:
     //  Java PSVM
         if (record->event.pressed) {
             SEND_STRING("public static void main(String[] args) {}" SS_TAP(X_LEFT) SS_TAP(X_ENT));
@@ -153,13 +160,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //┌────────┬────────┬────────┬────────┬────────┬────────┐                          ┌────────┬────────┬────────┬────────┬────────┬────────┐
      KC_F12,   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                              KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  _______,
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
-     KC_PLUS, KC_PSCR,  KC_PGUP, KC_UP,   KC_INS,  KC_ENT,                            KC_BSLS,  KC_P7,   KC_P8,   KC_P9,   KC_EQL,  KC_TILD,
+     KC_PLUS, KC_PSCR,  KC_PGUP, KC_UP,   KC_INS,  KC_ENT,                            KC_BSLS,  KC_7,    KC_8,    KC_9,    KC_EQL,  KC_TILD,
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
-     KC_UNDS,  KC_LPRN, KC_LEFT, KC_DOWN, KC_RGHT, KC_RPRN,                           KC_ASTR,  KC_P4,   KC_P5,   KC_P6,   KC_COLN, KC_DQUO,
+     KC_UNDS,  KC_LPRN, KC_LEFT, KC_DOWN, KC_RGHT, KC_RPRN,                           KC_ASTR,  KC_4,    KC_5,    KC_6,    KC_COLN, KC_DQUO,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-     KC_LCBR,  KC_EXLM, KC_PGDN, KC_HOME, KC_END,  KC_AMPR, KC_BSPC,         _______, KC_PIPE,  KC_P1,   KC_P2,   KC_P3,   KC_P0,   KC_RCBR,
+     KC_LCBR,  KC_EXLM, KC_PGDN, KC_HOME, KC_END,  KC_AMPR, KC_BSPC,         _______, KC_PIPE,  KC_1,    KC_2,    KC_3,    KC_0,    KC_RCBR,
   //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
-                                    _______, _______, _______,                   KC_SPC,   _______, KC_P0
+                                    _______, _______, _______,                   KC_SPC,   _______, KC_F11
                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
   ),
 
@@ -223,35 +230,17 @@ LSFT(KC_F12), LSFT(KC_F1), LSFT(KC_F2), LSFT(KC_F3), LSFT(KC_F4), LSFT(KC_F5), L
 // defines the keycodes for which TAPPING_FORCE_HOLD_PER_KEY should be enacted
 // when a user holds a key after tapping it, will now activate hold function instead of
 // (default) auto-repeating the tapping function
-bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
+uint16_t get_quick_tap_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case MT(MOD_LSFT,KC_BSPC):
-            return true;
+            return 0;
         case LT(1,KC_SPC):
-            return true;
-        case LT(2,KC_ENT):
-            return true;
+            return 0;
         default:
-            return false;
+            return QUICK_TAP_TERM;
     }
 }
 
-uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
-    switch (keycode) {
-        case MT(MOD_LSFT,KC_BSPC):
-            return 150;
-        case LT(1,KC_SPC):
-            return 150;
-        case LT(2,KC_ENT):
-            return 200;
-        case TD(WIN_QWERTY):
-            return 250;
-        case TD(CW_CL):
-            return 300;
-        default:
-            return TAPPING_TERM;
-    }
-}
 
 td_state_t cur_dance(tap_dance_state_t *state) {
     if (state->count == 1) {

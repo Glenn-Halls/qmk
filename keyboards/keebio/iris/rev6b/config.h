@@ -126,20 +126,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #endif
 
 // defines the length of the tapping term, in MS
-#define TAPPING_TERM 175
-
-// enables per-key tapping terms separate from above tapping term
-#define TAPPING_TERM_PER_KEY
-
-// inputs Layertoggle keypress on keypress instead of waiting for TAPPING_TERM delay
-#define HOLD_ON_OTHER_KEY_PRESS
-
-// imposes HOLD_ON_OTHER_KEY_PRESS functionality to MOD_TAP as well as Layertoggle
-#define IGNORE_MOD_TAP_INTERRUPT
+#define QUICK_TAP_TERM 175
 
 // when a user holds a key after tapping it, will now activate hold function instead of (default) auto-repeating the tapping function
 // this is on a per-key basis, defined in keymap
-#define TAPPING_FORCE_HOLD_PER_KEY
+#define QUICK_TAP_TERM_PER_KEY
+
+// inputs Layertoggle keypress on keypress instead of waiting for TAPPING_TERM delay
+#define HOLD_ON_OTHER_KEY_PRESS
 
 // increased layers from 4 to 6
 #define DYNAMIC_KEYMAP_LAYER_COUNT 6
