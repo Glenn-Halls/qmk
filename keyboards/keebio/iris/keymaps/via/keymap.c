@@ -194,7 +194,7 @@ LSFT(KC_F12), LSFT(KC_F1), LSFT(KC_F2), LSFT(KC_F3), LSFT(KC_F4), LSFT(KC_F5), L
   //├─────────────┼───────────┼───────────┼───────────┼───────────┼────────────┼────────┐        ┌──────────────────┼───────────┼───────────┼─────────────┼───────────┼──────────────┼───────────┤
      HYPR(KC_LBRC), HYPR(KC_Z), HYPR(KC_X), HYPR(KC_C), HYPR(KC_D), HYPR(KC_V), _______,                    _______, HYPR(KC_K), HYPR(KC_H), HYPR(KC_COMM),HYPR(KC_DOT),HYPR(KC_SLSH), HYPR(KC_RBRC),
   //└─────────────┴───────────┴───────────┴──────┬────┴──────┬────┴───────┬────┴───┬────┘        └───┬────────────┬─┴───────────┴───┬───────┴───┬─────────┴───────────┴──────────────┴───────────┘
-                                                    _______,     _______,   _______,                      _______,     _______,         TG(2)
+                                                    _______,     _______,   _______,                  LT(1,KC_SPC),     _______,         TG(2)
                                               // └───────────┴────────────┴────────┘                 └────────────┴─────────────────┴───────────┘
   ),
 
@@ -208,7 +208,7 @@ LSFT(KC_F12), LSFT(KC_F1), LSFT(KC_F2), LSFT(KC_F3), LSFT(KC_F4), LSFT(KC_F5), L
   //├───────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
      KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_HOME,          KC_END,  KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,
   //└───────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
-                                    _______, _______, _______,                    LT(1,KC_SPC), _______, TD(CW_CL)
+                                    _______, _______, _______,               LT(1,KC_SPC), _______, TD(CW_CL)
                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
   ),
 
@@ -222,7 +222,7 @@ LSFT(KC_F12), LSFT(KC_F1), LSFT(KC_F2), LSFT(KC_F3), LSFT(KC_F4), LSFT(KC_F5), L
   //├───────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
      KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_HOME,          KC_END,  KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,
   //└───────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
-                                    _______, _______, MT(MOD_LSFT,KC_BSPC),    LT(1,KC_SPC), _______, TD(CW_CL)
+                                    _______, _______, _______,                LT(1,KC_SPC), _______, TD(CW_CL)
                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
   )
 };
@@ -238,6 +238,19 @@ uint16_t get_quick_tap_term(uint16_t keycode, keyrecord_t *record) {
             return 0;
         default:
             return QUICK_TAP_TERM;
+    }
+}
+
+uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case TD(ENT_L235_L0):
+            return 300;
+        case TD(WIN_QWERTY):
+            return TAPPING_TERM + 300;
+        case TD(CW_CL):
+            return 300;
+        default:
+            return TAPPING_TERM;
     }
 }
 
@@ -301,7 +314,7 @@ void ent_tap(tap_dance_state_t *state, void *user_data) {
         case 1:
         case 2:
         case 3:
-            break;
+        break;
         default: tap_code(KC_ENT); break;
     }
 }
@@ -341,7 +354,7 @@ void ent_reset(tap_dance_state_t *state, void *user_data) {
 *   TapDance for WIN_QWERTY Key:
 *   tap = windows
 *   hold = windows
-*   double-tap = all layers off and switch to layer 0
+*   double-tap = all layers off and switch to layer 5
 *   double-hold = windows & layer 1 (for screen dragging)
 *   double-single-tap = same as double-tap
 */

@@ -109,6 +109,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // Sets the length of the tapping term, in MS
 #define TAPPING_TERM 123
 
+// Enables override of tapping term on a per-key basis
+#define TAPPING_TERM_PER_KEY
+
 // Changes tap / hold decision to interpret as a hold when a mod is pressed, then second key is pressed and released before tapping term
 #define PERMISSIVE_HOLD
 
