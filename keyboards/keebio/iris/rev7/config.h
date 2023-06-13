@@ -17,36 +17,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-/* key matrix size */
-// Rows are doubled-up
-#define MATRIX_ROWS 10
-#define MATRIX_COLS 6
-
-// wiring of each half
-#define MATRIX_ROW_PINS { B1, F0, F5, B4, D7 }
-#define MATRIX_COL_PINS { F1, F4, B5, C7, D4, D6 }
-#define MATRIX_ROW_PINS_RIGHT { B1, F0, F5, B4, B5 }
-#define MATRIX_COL_PINS_RIGHT { D4, D6, D7, C7, F1, F4 }
 #define SPLIT_HAND_PIN D5
 
-/* COL2ROW or ROW2COL */
-#define DIODE_DIRECTION COL2ROW
-
-/* define if matrix has ghost */
-//#define MATRIX_HAS_GHOST
-
-/* number of backlight levels */
-// #define BACKLIGHT_LEVELS 3
-
-/* Set 0 if debouncing isn't needed */
-#define DEBOUNCE 5
-
-/* serial.c configuration for split keyboard */
-#define SOFT_SERIAL_PIN D0
 
 /* ws2812 RGB LED */
-#define RGB_DI_PIN E6
-#ifdef RGB_DI_PIN
 #    define RGBLED_NUM 68
 #    define RGBLED_SPLIT { 34, 34 }
 #    define RGBLIGHT_HUE_STEP 8
@@ -122,18 +96,21 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #        define RGB_DISABLE_WHEN_USB_SUSPENDED
 #        define RGB_MATRIX_KEYPRESSES
 
-//#    endif
-#endif
-
 // defines the length of the tapping term, in MS
-#define QUICK_TAP_TERM 175
+// #define QUICK_TAP_TERM 175
 
 // when a user holds a key after tapping it, will now activate hold function instead of (default) auto-repeating the tapping function
 // this is on a per-key basis, defined in keymap
 #define QUICK_TAP_TERM_PER_KEY
 
 // inputs Layertoggle keypress on keypress instead of waiting for TAPPING_TERM delay
-#define HOLD_ON_OTHER_KEY_PRESS
+// #define HOLD_ON_OTHER_KEY_PRESS
+
+// Sets the length of the tapping term, in MS
+#define TAPPING_TERM 123
+
+// Changes tap / hold decision to interpret as a hold when a mod is pressed, then second key is pressed and released before tapping term
+#define PERMISSIVE_HOLD
 
 // increased layers from 4 to 6
 #define DYNAMIC_KEYMAP_LAYER_COUNT 6

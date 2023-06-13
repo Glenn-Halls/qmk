@@ -186,9 +186,9 @@ LSFT(KC_F12), LSFT(KC_F1), LSFT(KC_F2), LSFT(KC_F3), LSFT(KC_F4), LSFT(KC_F5), L
 
   [_FN3] = LAYOUT(
   //┌─────────────┬───────────┬───────────┬───────────┬───────────┬────────────┐                                    ┌───────────┬───────────┬─────────────┬───────────┬──────────────┬───────────┐
-     HYPR(KC_ESC), HYPR(KC_1), HYPR(KC_2), HYPR(KC_3), HYPR(KC_4), HYPR(KC_5),                                        HYPR(KC_6), HYPR(KC_7), HYPR(KC_8),   HYPR(KC_9), HYPR(KC_0),    _______,
+     HYPR(KC_ESC),  HYPR(KC_1), HYPR(KC_2), HYPR(KC_3), HYPR(KC_4), HYPR(KC_5),                                        HYPR(KC_6), HYPR(KC_7), HYPR(KC_8),   HYPR(KC_9), HYPR(KC_0),    _______,
   //├─────────────┼───────────┼───────────┼───────────┼───────────┼────────────┤                                    ├───────────┼───────────┼─────────────┼───────────┼──────────────┼───────────┤
-     HYPR(KC_EQL), HYPR(KC_Q), HYPR(KC_W), HYPR(KC_F), HYPR(KC_P), HYPR(KC_B),                                        HYPR(KC_J), HYPR(KC_L), HYPR(KC_U),   HYPR(KC_Y), HYPR(KC_SCLN), HYPR(KC_GRV),
+     HYPR(KC_EQL),  HYPR(KC_Q), HYPR(KC_W), HYPR(KC_F), HYPR(KC_P), HYPR(KC_B),                                        HYPR(KC_J), HYPR(KC_L), HYPR(KC_U),   HYPR(KC_Y), HYPR(KC_SCLN), HYPR(KC_GRV),
   //├─────────────┼───────────┼───────────┼───────────┼───────────┼────────────┤                                    ├───────────┼───────────┼─────────────┼───────────┼──────────────┼───────────┤
      HYPR(KC_MINS), HYPR(KC_A), HYPR(KC_R), HYPR(KC_S), HYPR(KC_T), HYPR(KC_G),                                       HYPR(KC_M), HYPR(KC_ENT), HYPR(KC_E),   HYPR(KC_I), HYPR(KC_O),    HYPR(KC_QUOT),
   //├─────────────┼───────────┼───────────┼───────────┼───────────┼────────────┼────────┐        ┌──────────────────┼───────────┼───────────┼─────────────┼───────────┼──────────────┼───────────┤
@@ -315,7 +315,7 @@ void ent_finished(tap_dance_state_t *state, void *user_data) {
         case TD_DOUBLE_TAP:
         case TD_DOUBLE_SINGLE_TAP: register_code(KC_ENT); break;
         case TD_TRIPLE_HOLD: layer_on(_FN5); break;
-        case TD_TRIPLE_TAP: layer_off(_FN1); layer_off(_FN4); break;
+        case TD_TRIPLE_TAP: layer_off(_FN1); layer_off(_FN2); layer_off(_FN3); layer_off(_FN4); break;
         case TD_TRIPLE_SINGLE_TAP: register_code(KC_ENT); break;
         default: break;
     }

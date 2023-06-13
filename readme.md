@@ -1,1 +1,1 @@
-qmk compile -kb keebio/iris/rev6b -km via
+qmk compile -kb keebio/iris/rev7 -km via

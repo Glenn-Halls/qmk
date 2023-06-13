@@ -1,7 +1,0 @@
-{
-    "keyboard_name": "Viris",
-    "usb": {
-        "pid": "0x6356",
-        "device_version": "6.1.0"
-    }
-}
