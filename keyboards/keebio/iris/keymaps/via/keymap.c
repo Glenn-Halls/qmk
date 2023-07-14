@@ -106,21 +106,28 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case MCR_05:
     //  Jetpack: child modifier
         if (record->event.pressed) {
-            SEND_STRING("modifier = Modifier");
+            SEND_STRING("modifier = modifier");
         }
         break;
 
     case MCR_06:
     // Jetpack Compose tag
         if (record->event.pressed) {
-            SEND_STRING("@Composable" SS_TAP(X_ENT));
+            SEND_STRING("modifier = Modifier");
         }
         break;
     
     case MCR_09:
     //  Java PSVM
         if (record->event.pressed) {
-            SEND_STRING("public static void main(String[] args) {}" SS_TAP(X_LEFT) SS_TAP(X_ENT));
+            SEND_STRING("@Composable" SS_TAP(X_ENT));
+        }
+        break;
+
+    case MCR_10:
+    //  Java PSVM
+        if (record->event.pressed) {
+            SEND_STRING("@Preview" SS_TAP(X_ENT));
         }
         break;
 
@@ -162,9 +169,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
      KC_PLUS, KC_PSCR,  KC_PGUP, KC_UP,   KC_INS,  KC_ENT,                            KC_BSLS,  KC_7,    KC_8,    KC_9,    KC_EQL,  KC_F11,
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
-     KC_UNDS,  KC_LPRN, KC_LEFT, KC_DOWN, KC_RGHT, KC_RPRN,                           KC_ASTR,  KC_4,    KC_5,    KC_6,    KC_COLN, KC_DQUO,
+     KC_UNDS,  KC_LPRN, KC_LEFT, KC_DOWN, KC_RGHT, KC_RPRN,                           KC_0,     KC_4,    KC_5,    KC_6,    KC_COLN, KC_DQUO,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-     KC_LCBR,  KC_EXLM, KC_PGDN, KC_HOME, KC_END,  KC_AMPR, KC_BSPC,         _______, KC_PIPE,  KC_1,    KC_2,    KC_3,    KC_SLSH, KC_RCBR,
+     KC_LCBR,  KC_EXLM, KC_PGDN, KC_HOME, KC_END,  KC_AMPR, KC_BSPC,         _______, KC_DOT,   KC_1,    KC_2,    KC_3,    KC_SLSH, KC_RCBR,
   //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
                                     _______, _______, _______,                   KC_SPC,   _______, KC_0
                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
@@ -236,6 +243,8 @@ uint16_t get_quick_tap_term(uint16_t keycode, keyrecord_t *record) {
             return 0;
         case LT(1,KC_SPC):
             return 0;
+        case TD(CW_CL):
+            return 0;
         default:
             return QUICK_TAP_TERM;
     }
@@ -246,9 +255,9 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case TD(ENT_L235_L0):
             return 300;
         case TD(WIN_QWERTY):
-            return TAPPING_TERM + 300;
-        case TD(CW_CL):
             return 300;
+        case TD(CW_CL):
+            return 200;
         default:
             return TAPPING_TERM;
     }
